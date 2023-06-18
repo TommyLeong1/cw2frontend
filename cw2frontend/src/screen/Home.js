@@ -1,5 +1,5 @@
 import React from 'react';
-import CatPost from './screen/CatPost'
+import CatPost from './CatPost';
 
 const Home = () => {
   return <CatPost/>;

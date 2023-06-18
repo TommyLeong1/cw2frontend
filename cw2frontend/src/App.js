@@ -2,6 +2,8 @@ import './App.css';
 import { Layout, Space } from 'antd';
 import { BrowserRouter as Router, Routes, Route, Link } from 'react-router-dom';
 
+
+
 import Home from './screen/Home';
 import Employee from './screen/Employee'
 
@@ -15,6 +17,10 @@ function App() {
 					<nav>
             <Space>
 						<Link to="/">Home</Link>
+              <Link to="/">Sign in/Sign up</Link>
+              <Link to="/">Profile</Link>
+              <Link to="/">Favourites</Link>
+              <Link to="/">Message board</Link>
             </Space>
 					</nav>          
 				</Header>
@@ -24,7 +30,7 @@ function App() {
 					</Routes>
 				</Content>
 				<Footer>
-					<p style={{ color: 'green' }}>VT6003CEM Demo</p>
+					<p style={{ color: 'green' }}>The Pet Shelter</p>
 				</Footer>
 			</Router>
 		</Layout>
