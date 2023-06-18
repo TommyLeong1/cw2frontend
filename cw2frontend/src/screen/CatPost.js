@@ -1,44 +1,56 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { Card, Col, Row, Spin } from 'antd';
-//import articles from './articles.json';
-import { api } from './conn/connect';
 import axios from 'axios';
-import {LoadingOutlined} from '@ant-design/icons';
+import { LoadingOutlined } from '@ant-design/icons';
+import PostIcon from './CatPostIcon';
+const { Meta } = Card;
 
 const CatPost = () => {
   const [catposts, setcatposts] = React.useState(null);
   const [loading, setLoading] = React.useState(true);
-  
-  React.useEffect(()=>{
-    axios.get(`${api.uri}/catposts`)
-      .then((res)=>{
-        setcatposts(res.data);
-      })
-      .then(()=>{
-        setLoading(false);
-      })
-  }, []);
 
-  if(loading){
-    const antIcon = <LoadingOutlined style={{ fontSize: 48}} spin />
-    return(<Spin indicator={antIcon} />);
-  } else {
-    if(!catposts){
-      return(<div>There is no cat post available now.</div>)
-    } else {
+  const GetCatPostData = () => {
+    const url = 'https://cw2backend.tommyleong1.repl.co/catposts'
+    axios.get(url)
+      .then(response => {
+                const result = response.data;
+                const { status, message, data } = result;
+                if (status !== '200') {
+                    alert(message, status)
+                }
+                else {
+                    setcatposts(data)
+                    console.log(data)
+                }
+            })
+            .catch(err => {
+                console.log(err)
+            })
+  }
+  useEffect(() => {
+        GetCatPostData();
+    }, [])
       return(
-        <Row>
+        <Row justify="space-around">
+          <h4 style={{ color: 'green' }}> 
+            Welcome to The Pet Shelter
+          </h4>
           {
-            catposts && catposts.map(({id, title, fullText, description
-                                      ,comments, likes, imgURL, summary, dateCreated, dateModified, breed})=> (
-              <Col span={8} key={id}>
-                <Card title={title} style={{width: 300}}>
-                  <p>{fullText}</p>
+            catposts && catposts.map(({id, title, comments, likes, imgURL, summary, breed})=> (
+              <Col span={8}>
+                <Card key={id} style={{ width: 320,color: 'gray' }} 
+                  cover={<img src={imgURL} alt={title} />} 
+                  hoverable={true}
+                  actions={[
+                    <PostIcon type="like"count={likes}/>,
+                    <PostIcon type="message"count={comments}/>,
+                    <PostIcon type="pushpin"/>
+                  ]}>
+                  <Meta title={title} />
+                  <p></p>
                   <p>{summary}</p>
-                  <p>{imgURL}</p>
-                  <p>{comments}</p>
-                  // <Link to= {`/a/${id}`}>Details</Link>
+                  <Link to={ `/Home` }>Details</Link>
                 </Card>
               </Col>
             ))
@@ -46,7 +58,5 @@ const CatPost = () => {
         </Row>
       )
     }
-  }
-}
 
 export default CatPost;
