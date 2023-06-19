@@ -12,6 +12,10 @@ const EditCat = () => {
     const [ViewEdit, SetEditShow] = useState(false)
     const handleEditShow = () => { SetEditShow(true) }
     const hanldeEditClose = () => { SetEditShow(false) }
+    //FOr Edit Photo
+    const [ViewEdit2, SetEditShow2] = useState(false)
+    const handleEditShow2 = () => { SetEditShow2(true) }
+    const hanldeEditClose2 = () => { SetEditShow2(false) }
     //FOr Delete Model
     const [ViewDelete, SetDeleteShow] = useState(false)
     const handleDeleteShow = () => { SetDeleteShow(true) }
@@ -29,8 +33,19 @@ const EditCat = () => {
     const [comments, setcomments] = useState("")
     const [likes, setlikes] = useState("")
     const [imgURL, setimgURL] = useState("")
+    const [imgURL2, setimgURL2] = useState("")
     const [summary, setsummary] = useState("")
     const [breed, setbreed] = useState("")
+
+    const handleFileUpload = (e) => {
+    const file = e.target.files[0];
+    const reader = new FileReader();
+    reader.readAsDataURL(file);
+    reader.onload = () => {
+        const result = reader.result;
+        setimgURL2(result);
+    };
+};
 
     const [Delete,setDelete] = useState(false)
     //Id for update record and Delete
@@ -110,6 +125,26 @@ const EditCat = () => {
                 console.log(err)
             })
     }
+    const handlePhotoEdit = () =>{
+      
+        const url = `https://cw2backend.tommyleong1.repl.co/catposts/${id}`
+        const Credentials = { imgURL2 }
+        axios.patch(url, Credentials)
+            .then(response => {
+                const result = response.data;
+                const { status, message } = result;
+                if (status !== '200') {
+                    alert(message, status)
+                }
+                else {
+                    alert(message)
+                    window.location.reload()
+                }
+            })
+            .catch(err => {
+                console.log(err)
+            })
+    }
     //call this function in useEffect
     console.log(ViewShow, RowData)
     useEffect(() => {
@@ -146,7 +181,7 @@ const EditCat = () => {
                                     <td style={{ minWidth: 190 }}>
                                         <Button size='sm' variant='primary' onClick={() => { handleViewShow(SetRowData(item)) }}>View</Button>|
                                         <Button size='sm' variant='warning' onClick={()=> {handleEditShow(SetRowData(item),setid(item._id))}}>Edit</Button>|
-                                        <Button size='sm' variant='danger' onClick={() => {handleViewShow(SetRowData(item),setid(item._id), setDelete(true))}}>Delete</Button>|
+                                        <Button size='sm' variant='danger' onClick={() => {handleViewShow(SetRowData(item),setid(item._id), setDelete(true))}}>Delete</Button>|<Button size='sm' variant='success' onClick={()=> {handleEditShow2(SetRowData(item),setid(item._id))}}>Upload Photo</Button>|
                                     </td>
                                 </tr>
                             )}
@@ -214,19 +249,19 @@ const EditCat = () => {
                                 <input type="text" className='form-control' onChange={(e) => settitle(e.target.value)} placeholder="Please enter Title" />
                             </div>
                             <div className='form-group mt-3'>
-                                <input type="textarea" className='form-control' onChange={(e) => setfullText(e.target.value)} placeholder="Please enter Full Text" />
+                                <input type="text" className='form-control' onChange={(e) => setfullText(e.target.value)} placeholder="Please enter Full Text" />
                             </div>
                             <div className='form-group mt-3'>
-                                <input type="textarea" className='form-control' onChange={(e) => setdescription(e.target.value)} placeholder="Please enter Description" />
+                                <input type="text" className='form-control' onChange={(e) => setdescription(e.target.value)} placeholder="Please enter Description" />
                             </div>
                             <div className='form-group mt-3'>
-                                <input type="textarea" className='form-control' onChange={(e) => setcomments(e.target.value)} placeholder="Please enter Comments" />
+                                <input type="text" className='form-control' onChange={(e) => setcomments(e.target.value)} placeholder="Please enter Comments" />
                             </div>
                           <div className='form-group mt-3'>
                                 <input type="text" className='form-control' onChange={(e) => setlikes(e.target.value)} placeholder="Please enter Likes" />
                             </div>
                           <div className='form-group mt-3'>
-                                <input type="textarea" className='form-control' onChange={(e) => setimgURL(e.target.value)} placeholder="Please enter ImgURL" />
+                                <input type="text" className='form-control' onChange={(e) => setimgURL(e.target.value)} placeholder="Please enter ImgURL" />
                             </div>
                           <div className='form-group mt-3'>
                                 <input type="text" className='form-control' onChange={(e) => setsummary(e.target.value)} placeholder="Please enter Summary" />
@@ -282,11 +317,35 @@ const EditCat = () => {
                             <div className='form-group mt-3'>
                                 <input type="text" className='form-control' onChange={(e) => setbreed(e.target.value)} placeholder="Please enter Breed" />
                             </div>
-                            <Button type='submit' className='btn btn-warning mt-4' onClick={handleEdit}>Edit Employee</Button>
+                            <Button type='submit' className='btn btn-warning mt-4' onClick={handleEdit}>Edit Cat Post</Button>
                         </div>
                     </Modal.Body>
                     <Modal.Footer>
                         <Button variant='secondary' onClick={hanldeEditClose}>Close</Button>
+                    </Modal.Footer>
+                </Modal>
+            </div>
+          {/* Modal for Edit catpost photo */}
+            <div className='model-box-view4'>
+                <Modal
+                    show={ViewEdit2}
+                    onHide={hanldeEditClose2}
+                    backdrop="static"
+                    keyboard={false}
+                >
+                    <Modal.Header closeButton>
+                        <Modal.Title>Edit Cat Post Photo</Modal.Title>
+                    </Modal.Header>
+                    <Modal.Body>
+                        <div>
+                            <div className='form-group'>
+                                <input type="file" onChange={handleFileUpload} />
+                              </div>
+                            <Button type='submit' className='btn btn-warning mt-4' onClick={handlePhotoEdit}>Edit Cat Post Photo</Button>
+                        </div>
+                    </Modal.Body>
+                    <Modal.Footer>
+                        <Button variant='secondary' onClick={hanldeEditClose2}>Close</Button>
                     </Modal.Footer>
                 </Modal>
             </div>
