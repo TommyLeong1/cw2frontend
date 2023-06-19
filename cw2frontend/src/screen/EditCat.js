@@ -214,19 +214,19 @@ const EditCat = () => {
                                 <input type="text" className='form-control' onChange={(e) => settitle(e.target.value)} placeholder="Please enter Title" />
                             </div>
                             <div className='form-group mt-3'>
-                                <input type="text" className='form-control' onChange={(e) => setfullText(e.target.value)} placeholder="Please enter Full Text" />
+                                <input type="textarea" className='form-control' onChange={(e) => setfullText(e.target.value)} placeholder="Please enter Full Text" />
                             </div>
                             <div className='form-group mt-3'>
-                                <input type="text" className='form-control' onChange={(e) => setdescription(e.target.value)} placeholder="Please enter Description" />
+                                <input type="textarea" className='form-control' onChange={(e) => setdescription(e.target.value)} placeholder="Please enter Description" />
                             </div>
                             <div className='form-group mt-3'>
-                                <input type="text" className='form-control' onChange={(e) => setcomments(e.target.value)} placeholder="Please enter Comments" />
+                                <input type="textarea" className='form-control' onChange={(e) => setcomments(e.target.value)} placeholder="Please enter Comments" />
                             </div>
                           <div className='form-group mt-3'>
                                 <input type="text" className='form-control' onChange={(e) => setlikes(e.target.value)} placeholder="Please enter Likes" />
                             </div>
                           <div className='form-group mt-3'>
-                                <input type="text" className='form-control' onChange={(e) => setimgURL(e.target.value)} placeholder="Please enter ImgURL" />
+                                <input type="textarea" className='form-control' onChange={(e) => setimgURL(e.target.value)} placeholder="Please enter ImgURL" />
                             </div>
                           <div className='form-group mt-3'>
                                 <input type="text" className='form-control' onChange={(e) => setsummary(e.target.value)} placeholder="Please enter Summary" />
