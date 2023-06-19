@@ -40,7 +40,7 @@ const CatPost = () => {
       <Row justify="space-between" align="middle">
         <Col>
           <Input.Search
-            placeholder="Search cats..."
+            placeholder="Search cat post..."
             value={searchTerm}
             onChange={(e) => setSearchTerm(e.target.value)}
             style={{ width: 300 }}
@@ -53,9 +53,9 @@ const CatPost = () => {
             onChange={(value) => setFilter(value)}
           >
             <Select.Option value="all">All</Select.Option>
-            <Select.Option value="Persian">Persian</Select.Option>
-            <Select.Option value="Siamese">Siamese</Select.Option>
-            <Select.Option value="Sphynx">Sphynx</Select.Option>
+            <Select.Option value="Bengal">Bengal</Select.Option>
+            <Select.Option value="California Spangled">California Spangled</Select.Option>
+            <Select.Option value="Burmese">Burmese</Select.Option>
           </Select>
         </Col>
       </Row>
@@ -85,7 +85,7 @@ const CatPost = () => {
                   <Meta title={title} />
                   <p></p>
                   <p>{summary}</p>
-                  <Link to={`/Home`}>Details</Link>
+                  <Link to={`/EditCat`}>Details</Link>
                 </Card>
               </Col>
             ))
